@@ -5,10 +5,14 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth; /* Optional: smooth scrolling */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern font stack */
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #f4f7f6; /* Slightly softer background */
     color: #333;
     display: flex;
     flex-direction: column;
@@ -19,7 +23,7 @@ body {
     width: 90%;
     max-width: 1400px; /* Wider container for layout */
     margin: 0 auto;
-    padding: 15px;
+    padding: 0 15px; /* Horizontal padding only */
 }
 
 /* Header & Footer */
@@ -43,6 +47,7 @@ body {
 .site-footer {
     margin-top: auto; /* Pushes footer to bottom */
     font-size: 0.9em;
+    padding: 1.5rem 0;
 }
 
 .site-footer a {
@@ -52,6 +57,19 @@ body {
 .site-footer a:hover {
     text-decoration: underline;
 }
+.site-footer p {
+    margin-bottom: 0.5rem;
+}
+
+/* Top Ad Container */
+#ad-top {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #fff; /* Separate background for emphasis */
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px; /* Space below the ad */
+    text-align: center;
+}
 
 /* Main Layout (using Flexbox) */
 .main-content {
@@ -59,27 +77,29 @@ body {
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
     gap: 20px; /* Space between columns */
     flex-grow: 1; /* Takes up available space */
-    padding-top: 20px;
+    padding-top: 0; /* Removed top padding as #ad-top has space */
     padding-bottom: 20px;
 }
 
 .player-area {
     flex: 3; /* Takes up more space */
-    min-width: 400px; /* Minimum width before wrapping */
+    min-width: 300px; /* Allow shrinking further */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* Removed explicit order - natural flow will handle it */
 }
 
 .sidebar {
     flex: 1; /* Takes less space */
-    min-width: 300px; /* Ensure ads fit */
+    min-width: 280px; /* Slightly smaller min-width */
     background-color: #fff;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center; /* Center ads */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+    height: fit-content; /* Allow sidebar height to adjust */
 }
 
 .sidebar h2 {
@@ -87,49 +107,52 @@ body {
     color: #1a2533;
     border-bottom: 1px solid #eee;
     padding-bottom: 5px;
+    font-size: 1.1rem;
+}
+.sidebar-content p { /* Style for static text in sidebar */
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.5;
 }
 
 /* Player Area Specifics */
 .player-wrapper {
     position: relative;
-    /* Aspect ratio padding-bottom trick for responsive iframe/video */
-    /* padding-bottom: 56.25%; /* 16:9 */
-    /* height: 0; */
-    /* overflow: hidden; */
     background-color: #000;
     border: 1px solid #ccc;
     margin-bottom: 20px;
-    min-height: 400px; /* Give it a minimum height */
+    /* Aspect ratio for 16:9 */
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+#player-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#player-container {
-    width: 100%;
-    height: 100%;
-    min-height: 400px; /* Match wrapper */
-    display: flex; /* Use flex to manage children */
-    align-items: center;
-    justify-content: center;
-}
-
-
 #player-container iframe,
 #player-container video {
-   /* position: absolute; */
-   /* top: 0; */
-   /* left: 0; */
+    display: none; /* Initially hidden, shown by JS */
     width: 100%;
-    height: 100%; /* Let the container control size */
-    max-height: 500px; /* Control max video height if needed */
+    height: 100%;
     border: none;
+    background-color: #000; /* Ensure video bg is black */
 }
 
 #player-placeholder {
-    color: #999;
+    display: block; /* Initially shown */
+    color: #aaa;
     font-size: 1.2em;
     text-align: center;
+    padding: 20px;
 }
 
 
@@ -143,6 +166,7 @@ body {
 .controls-section h2 {
     margin-bottom: 15px;
     text-align: center;
+    font-size: 1.3rem;
 }
 
 .channel-buttons, .m3u8-input-area {
@@ -155,10 +179,11 @@ body {
 
 .m3u8-input-area input[type="text"] {
     flex-grow: 1;
-    padding: 10px;
+    padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    min-width: 250px;
+    min-width: 200px; /* Adjust min-width for flexibility */
+    font-size: 1rem;
 }
 
 /* Buttons */
@@ -172,9 +197,10 @@ body {
     text-decoration: none;
     font-size: 1em;
     transition: background-color 0.3s ease;
-    display: inline-flex; /* For aligning icon and text */
+    display: inline-flex;
     align-items: center;
-    gap: 8px; /* Space between icon and text */
+    gap: 8px;
+    white-space: nowrap; /* Prevent buttons breaking line */
 }
 
 .btn:hover {
@@ -182,7 +208,7 @@ body {
 }
 
 .btn-telegram {
-    background-color: #0088cc; /* Telegram Blue */
+    background-color: #0088cc;
 }
 
 .btn-telegram:hover {
@@ -204,20 +230,30 @@ body {
     color: #333;
 }
 
-/* Ad Containers */
+/* Ad Containers Styling */
 .ad-container {
     margin-bottom: 20px;
-    text-align: center; /* Center inline-block ads */
-    padding: 10px;
+    text-align: center;
+    padding: 10px 0; /* Vertical padding */
     /* border: 1px dashed #ccc; /* For visualizing */
     min-height: 50px; /* Ensure space even if ad fails */
-    background-color: #fafafa; /* Slight background */
+    background-color: transparent; /* Use parent background or set specific one */
+    display: block; /* Important for responsive ads */
+    width: 100%; /* Ensure it takes container width */
+}
+/* Style specific ad containers if needed */
+.ad-container.ad-below-player {
+     margin-top: 25px;
+     padding-top: 20px;
+     border-top: 1px solid #eee; /* Separator line */
 }
 
 .ad-container h2 { /* Styling for ad section headers */
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .ad-note {
@@ -226,14 +262,6 @@ body {
     margin-top: 5px;
 }
 
-.ad-below-player, .ad-autorelaxed {
-    margin-top: 20px;
-    clear: both; /* Ensure it doesn't float next to controls if space allows */
-    width: 100%; /* Take full width of player area */
-    max-width: 728px; /* Common ad size limit */
-    margin-left: auto;
-    margin-right: auto;
-}
 
 /* Content Description */
 .content-description {
@@ -254,45 +282,56 @@ body {
 /* Responsive Adjustments */
 @media (max-width: 992px) {
     .main-content {
-        flex-direction: column; /* Stack columns */
+        flex-direction: column; /* Stack columns: Ad -> Left Sidebar -> Player Area -> Right Sidebar */
     }
     .player-area, .sidebar {
         width: 100%; /* Take full width */
         flex: none; /* Reset flex property */
+        min-width: unset; /* Remove min-width restriction */
     }
-    .left-sidebar {
-        order: 2; /* Player first */
-    }
-     .player-area {
-        order: 1;
-    }
-    .right-sidebar {
-        order: 3; /* Ads last */
-    }
-    .ad-below-player, .ad-autorelaxed {
-        max-width: 100%; /* Allow full width on smaller screens */
-    }
+    /* Order is now determined by HTML structure: #ad-top -> left-sidebar -> player-area -> right-sidebar */
 }
 
 @media (max-width: 768px) {
-    .site-header h1 a {
-        font-size: 1.5rem;
-    }
     .container {
-        width: 95%;
+        width: 100%; /* Use full width */
+        padding: 0 10px; /* Slightly less padding */
     }
-    .player-wrapper, #player-container {
-        min-height: 300px; /* Reduce min height */
+     #ad-top {
+        margin-bottom: 15px;
     }
-     #player-container video {
-        max-height: 400px;
+    .site-header h1 a {
+        font-size: 1.4rem;
+    }
+     .site-header p {
+        font-size: 0.85rem;
+    }
+    .player-wrapper {
+         /* Adjust padding-bottom if needed for different aspect ratios on mobile, or remove if fixed height is preferred */
+         min-height: 250px; /* Ensure minimum clickable area */
+         padding-bottom: 56.25%; /* Keep 16:9 for consistency */
+    }
+     .controls-section h2 {
+        font-size: 1.2rem;
     }
     .channel-buttons, .m3u8-input-area {
         flex-direction: column; /* Stack buttons/input */
-        align-items: stretch; /* Make buttons full width */
+        align-items: stretch; /* Make buttons/input full width */
     }
      .m3u8-input-area input[type="text"] {
         min-width: unset;
         width: 100%;
     }
+    .btn {
+        padding: 12px 15px; /* Slightly larger buttons */
+        font-size: 1rem;
+    }
+    .sidebar {
+        padding: 15px; /* Consistent padding */
+    }
+    .site-footer {
+        padding: 1rem 0;
+        font-size: 0.85em;
+    }
+
 }
