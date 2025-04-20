@@ -1,3 +1,24 @@
+/* CSS Variables (Custom Properties) */
+:root {
+    --primary-color: #007bff;
+    --primary-color-dark: #0056b3;
+    --secondary-color: #1a2533;
+    --secondary-color-light: #2c3e50;
+    --accent-color: #0088cc; /* Telegram Blue */
+    --accent-color-dark: #006da3;
+    --background-color: #f8f9fa; /* Lighter background */
+    --card-background-color: #ffffff;
+    --text-color: #343a40;
+    --text-color-light: #6c757d;
+    --text-color-inverted: #ffffff;
+    --border-color: #dee2e6;
+    --border-radius: 6px;
+    --spacing-unit: 1rem; /* approx 16px */
+    --header-height: 70px; /* Example */
+    --footer-height: 100px; /* Example */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 /* Basic Reset & Body Styling */
 * {
     box-sizing: border-box;
@@ -6,127 +27,168 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Optional: smooth scrolling */
+    scroll-behavior: smooth;
+    font-size: 100%; /* Base font size */
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern font stack */
+    font-family: var(--font-family);
     line-height: 1.6;
-    background-color: #f4f7f6; /* Slightly softer background */
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: var(--header-height); /* Prevent content overlap with fixed header (adjust if header isn't fixed) */
 }
 
 .container {
-    width: 90%;
-    max-width: 1400px; /* Wider container for layout */
+    width: 92%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 15px; /* Horizontal padding only */
+    padding: 0 var(--spacing-unit);
 }
 
-/* Header & Footer */
-.site-header, .site-footer {
-    background-color: #1a2533; /* Dark blue */
-    color: #fff;
-    padding: 1rem 0;
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Header */
+.site-header {
+    background-color: var(--secondary-color);
+    color: var(--text-color-inverted);
+    padding: 0; /* Let container handle padding */
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed; /* Keep header visible */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 1000;
+    display: flex;
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
 }
-
+.site-header .container {
+     width: 100%; /* Use full width inside fixed header */
+}
 .site-header h1 a {
-    color: #fff;
+    color: var(--text-color-inverted);
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 4vw, 1.8rem); /* Responsive font size */
+    font-weight: 600;
 }
 .site-header p {
-    color: #ccc;
-    font-size: 0.9rem;
+    color: #bdc3c7; /* Lighter grey */
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    margin-top: 0.25rem;
 }
 
+
+/* Footer */
 .site-footer {
+    background-color: var(--secondary-color);
+    color: #bdc3c7;
+    padding: calc(var(--spacing-unit) * 1.5) 0;
+    text-align: center;
     margin-top: auto; /* Pushes footer to bottom */
-    font-size: 0.9em;
-    padding: 1.5rem 0;
+    font-size: 0.85em;
+    min-height: var(--footer-height);
 }
-
+.site-footer p { margin-bottom: 0.5rem; }
 .site-footer a {
-    color: #aedff7;
+    color: #ecf0f1; /* Even lighter */
     text-decoration: none;
+    transition: color 0.3s ease;
 }
-.site-footer a:hover {
+.site-footer a:hover,
+.site-footer a:focus {
+    color: var(--text-color-inverted);
     text-decoration: underline;
 }
-.site-footer p {
-    margin-bottom: 0.5rem;
+.site-footer nav {
+    margin-top: 0.5rem;
 }
+
 
 /* Top Ad Container */
 #ad-top {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    background-color: #fff; /* Separate background for emphasis */
-    border-bottom: 1px solid #eee;
-    margin-bottom: 20px; /* Space below the ad */
+    padding-top: calc(var(--spacing-unit) * 1.5);
+    padding-bottom: var(--spacing-unit);
+    background-color: var(--card-background-color);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
     text-align: center;
 }
 
-/* Main Layout (using Flexbox) */
+/* Main Layout */
 .main-content {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 20px; /* Space between columns */
-    flex-grow: 1; /* Takes up available space */
-    padding-top: 0; /* Removed top padding as #ad-top has space */
-    padding-bottom: 20px;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 1.5);
+    flex-grow: 1;
+    padding-top: var(--spacing-unit);
+    padding-bottom: calc(var(--spacing-unit) * 2);
 }
 
 .player-area {
-    flex: 3; /* Takes up more space */
-    min-width: 300px; /* Allow shrinking further */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    /* Removed explicit order - natural flow will handle it */
+    flex: 3;
+    min-width: min(60vw, 400px); /* Responsive minimum width */
+    background-color: var(--card-background-color);
+    padding: calc(var(--spacing-unit) * 1.5);
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+    display: flex; /* Allow flex column layout */
+    flex-direction: column;
 }
 
 .sidebar {
-    flex: 1; /* Takes less space */
-    min-width: 280px; /* Slightly smaller min-width */
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    flex: 1;
+    min-width: 280px;
+    background-color: var(--card-background-color);
+    padding: calc(var(--spacing-unit) * 1.25);
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
     text-align: center;
-    height: fit-content; /* Allow sidebar height to adjust */
+    height: fit-content;
 }
-
 .sidebar h2 {
-    margin-bottom: 15px;
-    color: #1a2533;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+    margin-bottom: var(--spacing-unit);
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: calc(var(--spacing-unit) / 2);
     font-size: 1.1rem;
+    font-weight: 600;
 }
-.sidebar-content p { /* Style for static text in sidebar */
+.sidebar-content p {
     font-size: 0.9em;
-    color: #555;
+    color: var(--text-color-light);
     line-height: 1.5;
+    margin-bottom: var(--spacing-unit);
 }
 
-/* Player Area Specifics */
+/* Player Wrapper & Container */
 .player-wrapper {
     position: relative;
     background-color: #000;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    /* Aspect ratio for 16:9 */
-    padding-bottom: 56.25%;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
+    flex-shrink: 0; /* Prevent wrapper from shrinking */
 }
-
 #player-container {
     position: absolute;
     top: 0;
@@ -136,202 +198,298 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-color-inverted);
+    background-color: #111; /* Darker bg for placeholder */
 }
 
 #player-container iframe,
 #player-container video {
-    display: none; /* Initially hidden, shown by JS */
+    display: none;
     width: 100%;
     height: 100%;
     border: none;
-    background-color: #000; /* Ensure video bg is black */
+    background-color: #000;
 }
 
 #player-placeholder {
-    display: block; /* Initially shown */
-    color: #aaa;
-    font-size: 1.2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 20px;
+    padding: var(--spacing-unit);
+}
+#player-placeholder svg {
+    color: var(--text-color-light);
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+}
+#player-placeholder p {
+    font-size: 1rem;
+    color: #ccc;
 }
 
+/* Loading Indicator */
+.loading-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+    z-index: 10;
+    color: white;
+}
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
-/* Controls */
+/* Controls Section */
 .controls-section {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    margin-top: var(--spacing-unit);
+    padding-top: var(--spacing-unit);
+    border-top: 1px solid var(--border-color);
+    flex-grow: 1; /* Take remaining space in player-area */
 }
-
-.controls-section h2 {
-    margin-bottom: 15px;
+.controls-section > h2 { /* The main heading */
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--secondary-color);
 }
 
-.channel-buttons, .m3u8-input-area {
+.control-group {
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+.control-group h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-unit);
+    text-align: center;
+    color: var(--secondary-color-light);
+}
+.channel-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: calc(var(--spacing-unit) / 1.5);
 }
 
-.m3u8-input-area input[type="text"] {
+/* M3U8 Input Area */
+.m3u8-input-area {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: calc(var(--spacing-unit) / 2);
+    align-items: stretch; /* Make items same height */
+}
+.m3u8-input-area input[type="url"] {
     flex-grow: 1;
     padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 200px; /* Adjust min-width for flexibility */
-    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    min-width: 200px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.m3u8-input-area input[type="url"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+.m3u8-input-area button {
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 
 /* Buttons */
 .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: var(--text-color-inverted);
+    padding: 10px 18px; /* More padding */
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     text-decoration: none;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.2s ease-out, box-shadow 0.2s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    white-space: nowrap; /* Prevent buttons breaking line */
+    white-space: nowrap;
+    line-height: 1.5; /* Align text properly */
+    -webkit-appearance: none; /* Fix iOS button styles */
+    -moz-appearance: none;
+    appearance: none;
+}
+.btn:hover {
+    background-color: var(--primary-color-dark);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.35);
+}
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+/* Active Channel Button */
+.btn.channel-btn.active {
+    background-color: var(--primary-color-dark);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+    font-weight: 600;
 }
+
 
 .btn-telegram {
-    background-color: #0088cc;
+    background-color: var(--accent-color);
 }
-
 .btn-telegram:hover {
-    background-color: #006da3;
+    background-color: var(--accent-color-dark);
+}
+.btn-telegram:focus {
+     box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.4);
 }
 
-/* Telegram Section */
+.btn-small { /* For sidebar */
+    padding: 8px 12px;
+    font-size: 0.85em;
+}
+
+/* Telegram Join Section Specific */
 .telegram-join {
     text-align: center;
-    margin-top: 20px;
-    padding: 15px;
+    padding: calc(var(--spacing-unit) * 1.5);
     background-color: #e7f3fe;
     border: 1px solid #bde0fe;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
 }
 .telegram-join p {
-    margin-top: 10px;
+    margin-top: calc(var(--spacing-unit) / 1.5);
     font-size: 0.9em;
-    color: #333;
+    color: var(--text-color);
+}
+.telegram-join .btn {
+     margin-top: var(--spacing-unit);
 }
 
 /* Ad Containers Styling */
 .ad-container {
-    margin-bottom: 20px;
-    text-align: center;
-    padding: 10px 0; /* Vertical padding */
-    /* border: 1px dashed #ccc; /* For visualizing */
-    min-height: 50px; /* Ensure space even if ad fails */
-    background-color: transparent; /* Use parent background or set specific one */
-    display: block; /* Important for responsive ads */
-    width: 100%; /* Ensure it takes container width */
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    padding: var(--spacing-unit) 0;
+    min-height: 50px;
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    text-align: center; /* Center ads */
 }
-/* Style specific ad containers if needed */
 .ad-container.ad-below-player {
-     margin-top: 25px;
-     padding-top: 20px;
-     border-top: 1px solid #eee; /* Separator line */
+     margin-top: calc(var(--spacing-unit) * 1.5);
+     padding-top: calc(var(--spacing-unit) * 1.5);
+     border-top: 1px solid var(--border-color); /* Separator line */
 }
-
-.ad-container h2 { /* Styling for ad section headers */
-    font-size: 0.8rem;
-    color: #777;
+.ad-label { /* Standardize Ad label */
+    font-size: 0.7rem;
+    color: var(--text-color-light);
     margin-bottom: 8px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    display: block; /* Make sure it takes full width */
 }
-
-.ad-note {
+.ad-note { /* Sidebar ad note */
     font-size: 0.8em;
-    color: #777;
-    margin-top: 5px;
+    color: var(--text-color-light);
+    margin-top: calc(var(--spacing-unit) / 2);
 }
 
 
 /* Content Description */
 .content-description {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    margin-top: calc(var(--spacing-unit) * 2);
+    padding-top: calc(var(--spacing-unit) * 1.5);
+    border-top: 1px solid var(--border-color);
 }
 .content-description h2 {
-    color: #1a2533;
-    margin-bottom: 10px;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-unit);
+    font-weight: 600;
+    font-size: 1.3rem;
 }
 .content-description p {
-    margin-bottom: 15px;
-    color: #555;
+    margin-bottom: var(--spacing-unit);
+    color: var(--text-color);
+    font-size: 0.95rem;
 }
-
+.content-description p.keywords {
+    font-size: 0.8rem;
+    color: var(--text-color-light);
+    font-style: italic;
+}
+.content-description a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.content-description a:hover,
+.content-description a:focus {
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
 
 /* Responsive Adjustments */
 @media (max-width: 992px) {
+    body { padding-top: 0; } /* Remove padding if header is not fixed */
+    .site-header { position: static; height: auto; padding: var(--spacing-unit) 0; } /* Static header on mobile */
+
     .main-content {
-        flex-direction: column; /* Stack columns: Ad -> Left Sidebar -> Player Area -> Right Sidebar */
+        flex-direction: column;
     }
     .player-area, .sidebar {
-        width: 100%; /* Take full width */
-        flex: none; /* Reset flex property */
-        min-width: unset; /* Remove min-width restriction */
+        width: 100%;
+        flex: none;
+        min-width: unset;
     }
-    /* Order is now determined by HTML structure: #ad-top -> left-sidebar -> player-area -> right-sidebar */
+    .player-wrapper {
+       /* No change needed if aspect ratio is maintained */
+    }
 }
 
 @media (max-width: 768px) {
     .container {
-        width: 100%; /* Use full width */
-        padding: 0 10px; /* Slightly less padding */
+        width: 95%;
+        padding: 0 calc(var(--spacing-unit) * 0.75);
     }
-     #ad-top {
-        margin-bottom: 15px;
-    }
-    .site-header h1 a {
-        font-size: 1.4rem;
-    }
-     .site-header p {
-        font-size: 0.85rem;
-    }
-    .player-wrapper {
-         /* Adjust padding-bottom if needed for different aspect ratios on mobile, or remove if fixed height is preferred */
-         min-height: 250px; /* Ensure minimum clickable area */
-         padding-bottom: 56.25%; /* Keep 16:9 for consistency */
-    }
-     .controls-section h2 {
-        font-size: 1.2rem;
-    }
-    .channel-buttons, .m3u8-input-area {
-        flex-direction: column; /* Stack buttons/input */
-        align-items: stretch; /* Make buttons/input full width */
-    }
-     .m3u8-input-area input[type="text"] {
-        min-width: unset;
-        width: 100%;
-    }
-    .btn {
-        padding: 12px 15px; /* Slightly larger buttons */
-        font-size: 1rem;
-    }
-    .sidebar {
-        padding: 15px; /* Consistent padding */
-    }
-    .site-footer {
-        padding: 1rem 0;
-        font-size: 0.85em;
-    }
+    #ad-top { padding: var(--spacing-unit) 0; margin-bottom: var(--spacing-unit); }
+    .site-header { padding: calc(var(--spacing-unit) * 0.75) 0; }
 
+    .player-area { padding: var(--spacing-unit); }
+    .sidebar { padding: var(--spacing-unit); }
+
+    .controls-section > h2 { font-size: 1.2rem; }
+    .control-group h3 { font-size: 1rem; }
+
+    .m3u8-input-area { flex-direction: column; align-items: stretch; }
+    .m3u8-input-area input[type="url"] { width: 100%; }
+    .m3u8-input-area button { width: 100%; }
+
+    .channel-buttons { gap: calc(var(--spacing-unit) / 2); }
+    .btn { padding: 12px 15px; font-size: 1rem; }
+
+    .site-footer { padding: var(--spacing-unit) 0; font-size: 0.8rem; }
 }
