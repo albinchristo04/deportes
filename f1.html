@@ -86,30 +86,14 @@
                      <video id="hls-player" controls width="100%" style="display: none; max-height: 500px; background-color: #000;"></video>
                 </div>
             </div>
-<iframe id="sandbox" sandbox="allow-scripts allow-same-origin"></iframe>
 
-  <script>
-    function runCode() {
-      const iframe = document.getElementById('sandbox');
-      const code = document.getElementById('code').value;
-      iframe.removeAttribute('src');
-      iframe.srcdoc = code;
-    }
-
-    document.getElementById('channel-1-btn').addEventListener('click', function () {
-      const iframe = document.getElementById('sandbox');
-      const url = this.getAttribute('data-iframe-src');
-      iframe.removeAttribute('srcdoc');
-      iframe.src = url;
-    });
-  </script>
             <section class="controls-section" aria-labelledby="controls-heading">
                 <h2 id="controls-heading">Stream Controls</h2>
                 <div class="control-group">
                     <h3>Available Channels</h3>
                     <div class="channel-buttons">
                         <!-- *** ADD id="channel-1-btn" TO THIS BUTTON *** -->
-                        <button class="btn channel-btn" id="channel-1-btn" data-iframe-src="https://forispoeve.online/wp1/10.php">
+                        <button class="btn channel-btn" id="channel-1-btn" id="sandbox" sandbox="allow-scripts allow-same-origin" data-iframe-src="https://forispoeve.online/wp1/10.php">
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M4 3a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H4zm3 2h6v4H7V5zM7 11v2h2v-2H7zm4 0v2h2v-2h-2z" clip-rule="evenodd"/></svg>
                            <span>Channel 1</span>
                         </button>
