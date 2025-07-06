@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Iframe Player</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+    .error {
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="content">
+    <!-- Dynamic iframe will be inserted here -->
+  </div>
+
+  <script>
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    const iframeUrl = getParam("url");
+    const contentDiv = document.getElementById("content");
+
+    if (iframeUrl) {
+      const iframe = document.createElement("iframe");
+      iframe.src = decodeURIComponent(iframeUrl);
+      iframe.allow = "fullscreen; encrypted-media";
+      contentDiv.appendChild(iframe);
+    } else {
+      contentDiv.innerHTML = `<div class="error"><h2>No stream URL provided</h2><p>Use <code>?url=https://your-stream.com</code> in the address bar.</p></div>`;
+    }
+  </script>
+
+</body>
+</html>
