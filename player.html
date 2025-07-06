@@ -40,7 +40,7 @@
       iframe.src = decodeURIComponent(url);
 
       // STRONG sandbox: disables all JS/popups from the iframe
-      iframe.setAttribute("sandbox", "allow-same-origin allow-forms allow-pointer-lock"); 
+      iframe.setAttribute("sandbox","allow-same-origin allow-scripts"); 
       // You can also try: "allow-same-origin allow-scripts" (⚠️ riskier)
 
       container.appendChild(iframe);
