@@ -3,53 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dynamic Iframe Player</title>
+  <title>Safe Iframe Player</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
     iframe {
       width: 100%;
-      height: 100vh;
+      height: 100%;
       border: none;
     }
     .error {
       color: white;
-      font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 40px;
+      font-family: sans-serif;
     }
   </style>
 </head>
 <body>
-
-  <div id="content">
-    <!-- Dynamic iframe will be inserted here -->
-  </div>
+  <div id="content"></div>
 
   <script>
     function getParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
+      return new URLSearchParams(window.location.search).get(name);
     }
 
-    const iframeUrl = getParam("url");
-    const contentDiv = document.getElementById("content");
+    const url = getParam("url");
+    const container = document.getElementById("content");
 
-    if (iframeUrl) {
+    if (url) {
       const iframe = document.createElement("iframe");
-      iframe.src = decodeURIComponent(iframeUrl);
-      iframe.allow = "fullscreen; encrypted-media";
-      contentDiv.appendChild(iframe);
+      iframe.src = decodeURIComponent(url);
+
+      // STRONG sandbox: disables all JS/popups from the iframe
+      iframe.setAttribute("sandbox", "allow-same-origin allow-forms allow-pointer-lock"); 
+      // You can also try: "allow-same-origin allow-scripts" (⚠️ riskier)
+
+      container.appendChild(iframe);
     } else {
-      contentDiv.innerHTML = `<div class="error"><h2>No stream URL provided</h2><p>Use <code>?url=https://your-stream.com</code> in the address bar.</p></div>`;
+      container.innerHTML = `<div class="error"><h2>No stream URL provided</h2><p>Use <code>?url=https://your-stream.com</code></p></div>`;
     }
   </script>
-
 </body>
 </html>
